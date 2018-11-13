@@ -1,0 +1,6 @@
+https://la.mathworks.com/help/dsp/matrix-operations.html?searchHighlight=matrix&s_tid=doc_srchtitle
+
+ventanas
+https://www.mathworks.com/help/matlab/ref/inputdlg.html?searchHighlight=inputdlg&s_tid=doc_srchtitle
+https://www.mathworks.com/help/matlab/ref/listdlg.html
+https://la.mathworks.com/help/matlab/ref/questdlg.html?searchHighlight=questdlg&s_tid=doc_srchtitle
