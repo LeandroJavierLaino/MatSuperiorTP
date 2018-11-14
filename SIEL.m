@@ -11,13 +11,13 @@ function main
   global h = figure("name", "Sistema de Ecuaciones Lineales", "position", [330,140,720,440], "graphicssmoothing", "on", "menubar", "none");
   box on;
   axis off; 
-  integrantes = "- \n- Leandro Laiño \n- \n- \n- ";
+  integrantes = "-Cabaña Damian  1433581 \n- Leandro Laiño  1375260 \n- \n- \n- ";
   
-  uicontrol("style", "text", "string", "Bienvenido a", "fontsize", 26, "position",[200 330 230 50], "backgroundcolor", "white");
-  uicontrol("style", "text", "string", "SIEL", "fontsize", 26, "foregroundcolor", "red", "position",[422 330 100 50], "backgroundcolor", "white");
-  uicontrol("style", "text", "string", "Integrantes, Grupo :", "fontsize", 14, "foregroundcolor", "blue", "position",[234 264 260 50], "backgroundcolor", "white");
-  uicontrol("style", "text", "string", integrantes, "fontsize", 12, "foregroundcolor", "blue", "fontangle", "italic", "position",[264 156 200 110], "backgroundcolor", "white");
-  uicontrol("string", "Ingresar", "position",[290 52 150 36], "callback", "primerIngreso");
+  uicontrol("style", "text", "string", "Bienvenido a", "fontsize", 26, "position",[130 330 230 50], "backgroundcolor", "white");
+  uicontrol("style", "text", "string", "SIEL", "fontsize", 26, "foregroundcolor", "red", "position",[350 330 100 50], "backgroundcolor", "white");
+  uicontrol("style", "text", "string", "Integrantes, Grupo :", "fontsize", 14, "foregroundcolor", "blue", "position",[150 264 260 50], "backgroundcolor", "white");
+  uicontrol("style", "text", "string", integrantes, "fontsize", 12, "foregroundcolor", "blue", "fontangle", "italic", "position",[175 156 200 110], "backgroundcolor", "white");
+  uicontrol("string", "Ingresar", "position",[210 52 150 36], "callback", "primerIngreso");
 endfunction
 
 #Ingreso de Matriz
