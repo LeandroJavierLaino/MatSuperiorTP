@@ -1,38 +1,75 @@
+#clear
+################################################################################
+#Variables 
+#global A;
+#global A=[3,1;2,4];
+################################################################################
+
 #GUI
-#solo se encarga del ingreso de una matriz
-#deberemos ingresarla de la forma [fila1;fila2;....;filan] cada fila tiene
-#la forma elemento1,elemento2,...,elementon
-#prompt = {'Ingrese la matriz:'};
-#title = 'SIEL';
-#answer = inputdlg(prompt,title);
-
-msg ={'Ingrese matirz:'};
-titulo = 'Normas';
-btn = questdlg (msg, title, "Norma 1", "Norma 2", "Norma Infinito", "Norma 1");
-if (strcmp (btn,"Norma 1"))
-#solo se encarga del ingreso de una matriz
-#deberemos ingresarla de la forma [fila1;fila2;....;filan] cada fila tiene
-#la forma elemento1,elemento2,...,elementon
-prompt = {'Ingrese la matriz:'};
-title = 'SIEL';
-answer = inputdlg(prompt,title);
-h=warndlg(num2str( norma1(A)),"Norma 1");
-endif
-if (strcmp (btn,"Norma 2"))
-
-endif
-if (strcmp (btn,"Norma Infinito"))
-
-endif
+#Bienvenido
+function main
+  global h = figure("name", "Sistema de Ecuaciones Lineales", "position", [330,140,720,440], "graphicssmoothing", "on", "menubar", "none");
+  box on;
+  axis off; 
+  integrantes = "- \n- Leandro Laiño \n- \n- \n- ";
   
+  uicontrol("style", "text", "string", "Bienvenido a", "fontsize", 26, "position",[200 330 230 50], "backgroundcolor", "white");
+  uicontrol("style", "text", "string", "SIEL", "fontsize", 26, "foregroundcolor", "red", "position",[422 330 100 50], "backgroundcolor", "white");
+  uicontrol("style", "text", "string", "Integrantes, Grupo :", "fontsize", 14, "foregroundcolor", "blue", "position",[234 264 260 50], "backgroundcolor", "white");
+  uicontrol("style", "text", "string", integrantes, "fontsize", 12, "foregroundcolor", "blue", "fontangle", "italic", "position",[264 156 200 110], "backgroundcolor", "white");
+  uicontrol("string", "Ingresar", "position",[290 52 150 36], "callback", "primerIngreso");
+endfunction
+
+#Ingreso de Matriz
+function ingresaMatriz
+  global A;
+  #solo se encarga del ingreso de una matriz
+  #deberemos ingresarla de la forma [fila1;fila2;....;filan] cada fila tiene
+  #la forma elemento1,elemento2,...,elementon
+  prompt = {'Ingrese la matriz:'};
+  title = 'Matriz';
+  answer = inputdlg(prompt,title);
+  A = answer{1};
+endfunction
+
+#Primer ingreso de datos
+function primerIngreso
+  global h;
+  close(h);
+  global A;
+  
+  A =[];
+  ingresaMatriz;
+  principal;
+endfunction
+
+#Principal 
+function principal 
+global h;
+
+h = figure("name", "SIEL", "position", [330,95,780,500], "graphicssmoothing", "on");
+
+btn_ingresar = uimenu("label", "Ingresar");
+#  btn_matriz = uimenu(btn_ingresar,"Ingresar Matriz","callback","ingresaMatriz");
+btn_normas = uimenu("label", "Normas");
+btn_metodos = uimenu("label", "Metodos");
+btn_salir = uimenu("label", "Salir","callback","salirPrograma");
+
+endfunction
+
+function salirPrograma
+  global h;
+  close(h);
+endfunction
+
+################################################################################
 #Funciones
 #obetenemos la respuesta del input
-A=answer{1};
+#A=answer{1};
 
 #aca se pisa el valor para probar las funciones
 #si se quiere probar las funciones a partir del
 #GUI hay que comentar esta linea
-#A=[3,1;2,4];
 
 function diagonalDominante(A)
   [filas,columnas]=size(A);
@@ -123,3 +160,4 @@ function maxSumaFilas = normaInfinito(A)
   end
   return; 
 endfunction
+
