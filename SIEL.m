@@ -1,8 +1,7 @@
-#clear
-################################################################################
-#Variables 
+clear
+
 #global A;
-#global A=[3,1;2,4];
+
 ################################################################################
 
 #GUI
@@ -20,6 +19,17 @@ function main
   uicontrol("string", "Ingresar", "position",[210 52 150 36], "callback", "primerIngreso");
 endfunction
 
+#Primer ingreso de datos
+function primerIngreso
+  global h;
+  close(h);
+  global A;
+  
+  A =[];
+  ingresaMatriz;
+  principal;
+endfunction
+
 #Ingreso de Matriz
 function ingresaMatriz
   global A;
@@ -30,17 +40,6 @@ function ingresaMatriz
   title = 'Matriz';
   answer = inputdlg(prompt,title);
   A = answer{1};
-endfunction
-
-#Primer ingreso de datos
-function primerIngreso
-  global h;
-  close(h);
-  global A;
-  
-  A =[];
-  ingresaMatriz;
-  principal;
 endfunction
 
 #Principal 
@@ -57,13 +56,22 @@ btn_salir = uimenu("label", "Salir","callback","salirPrograma");
 
 endfunction
 
+
 function salirPrograma
   global h;
   close(h);
 endfunction
 
 ################################################################################
+
+#Variables 
+
+global A=[3,1;2,4];
+
+################################################################################
+
 #Funciones
+
 #obetenemos la respuesta del input
 #A=answer{1};
 
