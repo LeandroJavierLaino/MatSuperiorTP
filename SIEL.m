@@ -1,16 +1,17 @@
-clear
-
-#global A;
-
 ################################################################################
 
+#Variables 
+
+global A = [3,1;2,4];
+
+################################################################################
 #GUI
 #Bienvenido
-function main
+function SIEL
   global h = figure("name", "Sistema de Ecuaciones Lineales", "position", [330,140,720,440], "graphicssmoothing", "on", "menubar", "none");
   box on;
   axis off; 
-  integrantes = "-Cabaña Damian  1433581 \n- Leandro Laiño  1375260 \n- \n- \n- ";
+  integrantes = "- Cabaña Damian  1433581 \n- Leandro Laiño  1375260 \n- \n- \n- ";
   
   uicontrol("style", "text", "string", "Bienvenido a", "fontsize", 26, "position",[130 330 230 50], "backgroundcolor", "white");
   uicontrol("style", "text", "string", "SIEL", "fontsize", 26, "foregroundcolor", "red", "position",[350 330 100 50], "backgroundcolor", "white");
@@ -33,13 +34,17 @@ endfunction
 #Ingreso de Matriz
 function ingresaMatriz
   global A;
+
   #solo se encarga del ingreso de una matriz
   #deberemos ingresarla de la forma [fila1;fila2;....;filan] cada fila tiene
   #la forma elemento1,elemento2,...,elementon
   prompt = {'Ingrese la matriz:'};
   title = 'Matriz';
-  answer = inputdlg(prompt,title);
-  A = answer{1};
+  rows = [1,20];
+  defaults = {"3","2"};
+  answer = inputdlg(prompt,title,rows,defaults);
+  A = answer;
+
 endfunction
 
 #Principal 
@@ -49,9 +54,21 @@ global h;
 h = figure("name", "SIEL", "position", [330,95,780,500], "graphicssmoothing", "on");
 
 btn_ingresar = uimenu("label", "Ingresar");
-#  btn_matriz = uimenu(btn_ingresar,"Ingresar Matriz","callback","ingresaMatriz");
+  btn_matriz = uimenu(btn_ingresar,"label","Ingresar Matriz","callback","ingresaMatriz");
+
+btn_diagonales = uimenu("label", "Diagonales");
+  btn_dominante = uimenu(btn_diagonales,"label", "Dominante","callback","diagonalDominante");
+  btn_dominanteestricto = uimenu(btn_diagonales,"label", "Dominante Estricto","callback","diagonalEstrictamenteDominante");
+
 btn_normas = uimenu("label", "Normas");
+  btn_norma1 = uimenu(btn_normas,"label", "Norma 1","callback","norma1");
+  btn_norma2 = uimenu(btn_normas,"label", "Norma 2","callback","norma2");
+  btn_normainf = uimenu(btn_normas,"label", "Norma Infinito","callback","normaInfinito");
+
 btn_metodos = uimenu("label", "Metodos");
+  btn_jacobi = uimenu(btn_metodos,"label", "Jacobi", "callback", "jacobi");
+  btn_gauss = uimenu(btn_metodos,"label", "Gauss Seidel", "callback", "gaussseidel");
+  
 btn_salir = uimenu("label", "Salir","callback","salirPrograma");
 
 endfunction
@@ -63,10 +80,6 @@ function salirPrograma
 endfunction
 
 ################################################################################
-
-#Variables 
-
-global A=[3,1;2,4];
 
 ################################################################################
 
@@ -168,4 +181,3 @@ function maxSumaFilas = normaInfinito(A)
   end
   return; 
 endfunction
-
