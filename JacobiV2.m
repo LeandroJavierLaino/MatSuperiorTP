@@ -31,7 +31,7 @@ endfunction
           
 
 function metodoJacobi(vectorInicial,corte,decimales,matrizCoeficientes,matrizIndependientes)
-  matrizT = calculoMatrizZ(matrizCoeficientes);
+  matrizT = calculoMatrizT(matrizCoeficientes);
   matrizC = calculoMatrizC(matrizCoeficientes,matrizIndependientes);
   matrizIncognita = vectorInicial;
   flagInicial = 1;
