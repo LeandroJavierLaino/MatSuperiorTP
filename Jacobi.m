@@ -7,8 +7,7 @@ function metodoJacobi(vectorInicial,corte,decimales,matrizT,matrizC)
   matrizResultado = [];
   error = 0;
   
-   while (error > corte | flagInicial)
-     for h=1:1:10 
+   while (error > corte | flagInicial) 
         error = 0;
         matrizResultado = matrizT * matrizIncognita + matrizC
         
@@ -21,7 +20,7 @@ function metodoJacobi(vectorInicial,corte,decimales,matrizT,matrizC)
       
         matrizIncognita = matrizResultado;
         flagInicial = 0;
-      end  
+      
    endwhile
 endfunction
 
