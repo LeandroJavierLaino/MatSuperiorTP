@@ -1,0 +1,10 @@
+LD = tril(A);
+G = -LD\triu(A,1);
+c = LD\b;
+x=z;
+for i = 1:n
+  x = G*x + c;
+  fprintf(1,'%3d     ',i);
+  fprintf(1,'%5.5f     ',x');
+  fprintf(1,'\n');
+end
