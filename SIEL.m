@@ -428,7 +428,7 @@ function jacobi
     matrizResultado = matrizT * matrizIncognita + matrizC
         
     for j=1:1:fila
-      if normaInfinitoCualquiera(matrizResultado(j))>0
+      if normaInfinitoCualquiera(matrizResultado(j))!=0
         errorMax = abs(normaInfinitoCualquiera(matrizResultado(j) - matrizIncognita(j))) / abs(normaInfinitoCualquiera(matrizResultado(j)));
         if errorMax > error
           error = errorMax
@@ -506,9 +506,6 @@ function gaussseidel
   
   panel = uipanel("title", "SIEL", "position", [.10 .10 .85 .85], "backgroundcolor", "white");
   
-  #TODO: ver como mostrar los resultados de Gauss Seidel
-  #Reemplazar por Gauss Seidel
-
   LD = tril(A);
   G = -LD\triu(A,1);
   c = LD\B;
@@ -519,28 +516,27 @@ function gaussseidel
   error = 0;
   resultados = "";
   resultados = strcat("Paso # 0 : ",mat2str(inicial)," \n",resultados);
-
+  n=1;
   do 
     error = 0;
     x = G*y + c;
-	  fprintf(1,'%3d     ',i);
-	  fprintf(1,'%5.5f     ',x');
-	  fprintf(1,'\n');
 
 	  for i = 1:1:fila
-	    errorMax =abs(x(i)-y(i))/abs(x(i));
-	    if errorMax > error 
-		    error = errorMax
-	    endif
+      if(x(i)!= 0)
+	      errorMax =abs(x(i)-y(i))/abs(x(i));
+	      if errorMax > error 
+		      error = errorMax
+	      endif
+      endif
     end	  
 	  if(error > cotaerror)
-      resultados = strcat("Paso # ",num2str(i)," : ",mat2str(matrizResultado)," - Criterio : ",num2str(errorMax),">",num2str(error)," \n",resultados);  
+      resultados = strcat("Paso # ",num2str(n)," : ",mat2str(x)," - Criterio : ",num2str(errorMax),">",num2str(cotaerror)," \n",resultados);  
     else
-      resultados = strcat("Paso # ",num2str(i)," : ",mat2str(matrizResultado)," - Criterio : ",num2str(errorMax),"<",num2str(error)," \n",resultados);  
+      resultados = strcat("Paso # ",num2str(n)," : ",mat2str(x)," - Criterio : ",num2str(errorMax),"<",num2str(cotaerror)," \n",resultados);  
     endif;
     
     y=x;
-
+    n=n+1;
   until(error < cotaerror);
   resultados = strcat("Error : ",num2str(errorMax)," \n",resultados)
   uicontrol("parent", panel, "style", "text","position", [60 10 600 600], "string",resultados);
