@@ -223,7 +223,7 @@ function ingresaValores
   flag = false;
   
   do
-    prompt = {'Ingrese la Dimension:'};
+    prompt = {"Ingrese la Dimension de la matriz cuadrada a utilizar.\n El mismo debe ser un numero entero"};
     title = 'Dimension';
     answer = inputdlg(prompt,title);
     if(isempty(answer))
@@ -244,7 +244,7 @@ function ingresaValores
   #la forma elemento1,elemento2,...,elementon
 
   do
-    prompt = {"Ingrese los coeficientes de las filas separadas por comas(,) \nCada fila debe estar separado por un punto y como(;): "};
+    prompt = {"Ingrese los coeficientes de las filas separadas por comas(,) \nCada fila debe estar separado por un punto y como(;) "};
     title = 'Matriz';
     answer = str2num(inputdlg(prompt,title){1});
     if(isempty(answer))
@@ -261,7 +261,7 @@ function ingresaValores
   flag = false;
   
   do
-    prompt = {'Ingrese el vector de independientes:'};
+    prompt = {"Ingrese el vector de terminos independientes \n separados por punto y coma(;)'"};
     title = 'Independientes';
     answer = str2num(inputdlg(prompt,title){1});
     if(isempty(answer))
