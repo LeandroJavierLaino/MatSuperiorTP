@@ -4,7 +4,7 @@ clear
 ################################################################################
 
 A = [3,1;2,4];
-B = [1,4];
+B = [1;4];
 dimension = 2;
 incial = [0;0];
 decimales = 5;
@@ -101,6 +101,21 @@ function maxSumaFilas = normaInfinito()
   return; 
 endfunction
 
+function maxSumaFilas = normaInfinitoCualquiera(A)
+  [filas,columnas]=size(A);
+  maxSumaFilas = 0;
+  for f=1:1:filas
+    sumaFila = 0;
+    for c=1:1:columnas
+      sumaFila = sumaFila + abs(A(f,c))
+    end
+    if(sumaFila > maxSumaFilas)
+      maxSumaFilas = sumaFila;
+    end
+  end
+  return; 
+endfunction
+
 ################################################################################
 #                                   JACOBI
 ################################################################################
@@ -134,14 +149,14 @@ endfunction
           
 
 function metodoJacobi(vectorInicial,corte,decimales,matrizCoeficientes,matrizIndependientes)
-  matrizT = calculoMatrizT(matrizCoeficientes);
+  matrizT = calculoMatrizZ(matrizCoeficientes);
   matrizC = calculoMatrizC(matrizCoeficientes,matrizIndependientes);
   matrizIncognita = vectorInicial;
   flagInicial = 1;
   [fila,columna] = size(matrizT);
   matrizResultado = [];
   error = 0;
-  
+  output_precision(decimales);
    while (error > corte | flagInicial)
    
         error = 0;
@@ -159,7 +174,9 @@ function metodoJacobi(vectorInicial,corte,decimales,matrizCoeficientes,matrizInd
        
    endwhile
 endfunction
-
+################################################################################
+#                                    GAUSS SEIDEL                              #
+################################################################################
 ################################################################################
 
 #GUI
@@ -169,11 +186,11 @@ function main
   global h = figure("name", "Sistema de Ecuaciones Lineales", "position", [330,140,720,440], "graphicssmoothing", "on", "menubar", "none");
   box on;
   axis off; 
-  integrantes = "- Cabaña Damian  1433581 \n- Leandro Laiño  1375260 \n- \n- \n- ";
+  integrantes = "- Cabaña Damian  1433581 \n- Laiño Leandro 1375260 \n- Pereyra Yohanna - 1224992 \n- Sebastian Zapata - 1166360 \n ";
   
   uicontrol("style", "text", "string", "Bienvenido a", "fontsize", 26, "position",[130 330 230 50], "backgroundcolor", "white");
   uicontrol("style", "text", "string", "SIEL", "fontsize", 26, "foregroundcolor", "red", "position",[350 330 100 50], "backgroundcolor", "white");
-  uicontrol("style", "text", "string", "Integrantes, Grupo :", "fontsize", 14, "foregroundcolor", "blue", "position",[150 264 260 50], "backgroundcolor", "white");
+  uicontrol("style", "text", "string", "Integrantes, Grupo :", "fontsize", 12, "foregroundcolor", "blue", "position",[150 264 400 50], "backgroundcolor", "white");
   uicontrol("style", "text", "string", integrantes, "fontsize", 12, "foregroundcolor", "blue", "fontangle", "italic", "position",[175 156 200 110], "backgroundcolor", "white");
   uicontrol("string", "Ingresar", "position",[210 52 150 36], "callback", "primerIngreso");
 endfunction
@@ -348,6 +365,7 @@ function jacobi
   global cotaerror;
   global A;
   global B;
+  global dimension;
   
   flag = false;
   
@@ -356,7 +374,7 @@ function jacobi
     title = 'Inicial';
     answer = str2num(inputdlg(prompt,title){1});
     
-    if ( not(isempty(answer)))
+    if ( not(isempty(answer))&&rows(answer) == dimension)
       inicial = answer;
       flag = true;
     else
@@ -393,17 +411,54 @@ function jacobi
     endif;
   until(flag);
   
-  panel = uipanel("title", "SIEL", "position", [.15 .20 .7 .65], "backgroundcolor", "white");
-  uicontrol("parent", panel, "style", "text", "string",strcat("El resultado de Jacobi es : ",mat2str(A),"*X",mat2str(B)));
-  #TODO: ver como mostrar los resultados de Jacobi
-endfunction
+  panel = uipanel("title", "SIEL", "position", [.10 .10 .85 .85], "backgroundcolor", "white");
+    
+  matrizT = calculoMatrizZ(A);
+  matrizC = calculoMatrizC(A,B);
+  matrizIncognita = inicial;
+  [fila,columna] = size(matrizT);
+  matrizResultado = [];
+  error = 0;
+  i=1;
+  errorMax = 0;
+  resultados = "";
+  resultados = strcat("Paso # 0 : ",mat2str(inicial)," \n",resultados);
+  do
+    error = 0;
+    matrizResultado = matrizT * matrizIncognita + matrizC
+        
+    for j=1:1:fila
+      if normaInfinitoCualquiera(matrizResultado(j))>0
+        errorMax = abs(normaInfinitoCualquiera(matrizResultado(j) - matrizIncognita(j))) / abs(normaInfinitoCualquiera(matrizResultado(j)));
+        if errorMax > error
+          error = errorMax
+        endif
+      endif
+    end
+    output_precision(decimales);
+    
+    if(error > cotaerror)
+      resultados = strcat("Paso # ",num2str(i)," : ",mat2str(matrizResultado)," - Criterio : ",num2str(errorMax),">",num2str(error)," \n",resultados);  
+    else
+      resultados = strcat("Paso # ",num2str(i)," : ",mat2str(matrizResultado)," - Criterio : ",num2str(errorMax),"<",num2str(error)," \n",resultados);  
+    endif;
+    
+    matrizIncognita = matrizResultado;
 
+    i=i+1; 
+   until (error < cotaerror)
+   resultados = strcat("Error : ",num2str(errorMax)," \n",resultados)
+  uicontrol("parent", panel, "style", "text","position", [60 10 600 600], "string",resultados);   
+endfunction
+#
+#GAUSS SEIDEL GAUSS SEIDEL GAUSS SEIDEL GAUSS SEIDEL GAUSS SEIDEL GAUSS SEIDEL
 function gaussseidel
   global inicial;
   global decimales;
   global cotaerror;
   global A;
   global B;
+  global dimension;
   
   flag = false;
   
@@ -412,7 +467,7 @@ function gaussseidel
     title = 'Inicial';
     answer = str2num(inputdlg(prompt,title){1});
     
-    if ( not(isempty(answer)))
+    if ( not(isempty(answer)&&rows(answer) == dimension))
       inicial = answer;
       flag = true;
     else
@@ -449,10 +504,49 @@ function gaussseidel
     endif;
   until(flag);
   
-  panel = uipanel("title", "SIEL", "position", [.15 .20 .7 .65], "backgroundcolor", "white");
-  uicontrol("parent", panel, "style", "text", "string",strcat("El resultado de Gauss Seidel es : ",mat2str(A),"*X",mat2str(B)));
+  panel = uipanel("title", "SIEL", "position", [.10 .10 .85 .85], "backgroundcolor", "white");
+  
   #TODO: ver como mostrar los resultados de Gauss Seidel
+  #Reemplazar por Gauss Seidel
+
+  LD = tril(A);
+  G = -LD\triu(A,1);
+  c = LD\B;
+  x=inicial;
+  y=inicial;
+  [fila,columna]=size(x);
+
+  error = 0;
+  resultados = "";
+  resultados = strcat("Paso # 0 : ",mat2str(inicial)," \n",resultados);
+
+  do 
+    error = 0;
+    x = G*y + c;
+	  fprintf(1,'%3d     ',i);
+	  fprintf(1,'%5.5f     ',x');
+	  fprintf(1,'\n');
+
+	  for i = 1:1:fila
+	    errorMax =abs(x(i)-y(i))/abs(x(i));
+	    if errorMax > error 
+		    error = errorMax
+	    endif
+    end	  
+	  if(error > cotaerror)
+      resultados = strcat("Paso # ",num2str(i)," : ",mat2str(matrizResultado)," - Criterio : ",num2str(errorMax),">",num2str(error)," \n",resultados);  
+    else
+      resultados = strcat("Paso # ",num2str(i)," : ",mat2str(matrizResultado)," - Criterio : ",num2str(errorMax),"<",num2str(error)," \n",resultados);  
+    endif;
+    
+    y=x;
+
+  until(error < cotaerror);
+  resultados = strcat("Error : ",num2str(errorMax)," \n",resultados)
+  uicontrol("parent", panel, "style", "text","position", [60 10 600 600], "string",resultados);
+
 endfunction
+#
 
 function salirPrograma
   global h;
