@@ -2,14 +2,14 @@ clear
 ################################################################################
 #                                  VARIABLES                                   # 
 ################################################################################
-
+#{
 A = [3,1;2,4];
 B = [1;4];
 dimension = 2;
 incial = [0;0];
 decimales = 5;
 cotaerror = 0.001;
-
+#}
 ################################################################################
 #                                FUNCIONES                                     #
 ################################################################################
@@ -205,11 +205,11 @@ function primerIngreso
   global A;
   global B;
   global dimension;
-  
+  #{
   A = [3,1;2,4];
   B = [1,4];
   dimension = 2;
-  
+  #}
   ingresaValores;
   principal;
 endfunction
@@ -244,7 +244,7 @@ function ingresaValores
   #la forma elemento1,elemento2,...,elementon
 
   do
-    prompt = {'Ingrese un valor: '};
+    prompt = {"Ingrese los coeficientes de las filas separadas por comas(,) \nCada fila debe estar separado por un punto y como(;): "};
     title = 'Matriz';
     answer = str2num(inputdlg(prompt,title){1});
     if(isempty(answer))
