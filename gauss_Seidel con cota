@@ -1,0 +1,37 @@
+%datos de prueba 
+A = [7 -1 4;3 -8 2;4 1 -6]; %matriz
+b = [8;-4;3]; %termino independiente
+corte = 0.001; %criterio de corte 
+z = [0;0;0]; %inicial
+
+
+%Comienza codigo
+LD = tril(A);
+G = -LD\triu(A,1);
+c = LD\b;
+x=z;
+y=z;
+[fila,columna]=size(x);
+
+flagInicial = 1;
+error = 0;
+
+while (error > corte | flagInicial)
+  
+  error = 0;
+  x = G*y + c;
+	fprintf(1,'%3d     ',i);
+	fprintf(1,'%5.5f     ',x');
+	fprintf(1,'\n');
+
+	for i = 1:1:fila
+	  errorMax =abs(x(i)-y(i))/abs(x(i));
+	  
+	  if errorMax > error 
+		 error = errorMax
+	  endif
+  end	  
+	
+  y=x;
+  flagInicial=0;
+endwhile
