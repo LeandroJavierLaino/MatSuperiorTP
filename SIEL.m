@@ -226,6 +226,9 @@ function ingresaValores
     prompt = {'Ingrese la Dimension:'};
     title = 'Dimension';
     answer = inputdlg(prompt,title);
+    if(isempty(answer))
+      return;
+    endif;
     if(str2double(answer)>0)
       dimension = str2double(answer);
       flag = true;
@@ -244,6 +247,9 @@ function ingresaValores
     prompt = {'Ingrese un valor: '};
     title = 'Matriz';
     answer = str2num(inputdlg(prompt,title){1});
+    if(isempty(answer))
+      return;
+    endif;
     if (rows(answer) == dimension && columns(answer) == dimension)
       A = answer;
       flag = true;
@@ -258,6 +264,9 @@ function ingresaValores
     prompt = {'Ingrese el vector de independientes:'};
     title = 'Independientes';
     answer = str2num(inputdlg(prompt,title){1});
+    if(isempty(answer))
+      return;
+    endif;
     if (rows(answer) == dimension)
       B = answer;
       flag = true;
@@ -373,7 +382,9 @@ function jacobi
     prompt = {'Ingrese el vector Inicial:'};
     title = 'Inicial';
     answer = str2num(inputdlg(prompt,title){1});
-    
+    if(isempty(answer))
+      return;
+    endif;
     if ( not(isempty(answer))&&rows(answer) == dimension)
       inicial = answer;
       flag = true;
@@ -387,7 +398,9 @@ function jacobi
     prompt = {'Ingrese la cantidad de decimales que desea : '};
     title = 'Inicial';
     answer = str2num(inputdlg(prompt,title){1});
-    
+    if(isempty(answer))
+      return;
+    endif;
     if (not(isempty(answer)))
       decimales = answer;
       flag = true;
@@ -402,7 +415,9 @@ function jacobi
     prompt = {'Ingrese una cota de error : '};
     title = 'Inicial';
     answer = str2num(inputdlg(prompt,title){1});
-    
+    if(isempty(answer))
+      return;
+    endif;
     if (not(isempty(answer)))
       cotaerror = answer;
       flag = true;
@@ -466,7 +481,9 @@ function gaussseidel
     prompt = {'Ingrese el vector Inicial:'};
     title = 'Inicial';
     answer = str2num(inputdlg(prompt,title){1});
-    
+    if(isempty(answer))
+      return;
+    endif;
     if ( not(isempty(answer)&&rows(answer) == dimension))
       inicial = answer;
       flag = true;
@@ -480,7 +497,9 @@ function gaussseidel
     prompt = {'Ingrese la cantidad de decimales que desea : '};
     title = 'Inicial';
     answer = str2num(inputdlg(prompt,title){1});
-    
+    if(isempty(answer))
+      return;
+    endif;
     if (not(isempty(answer)))
       decimales = answer;
       flag = true;
@@ -495,7 +514,9 @@ function gaussseidel
     prompt = {'Ingrese una cota de error : '};
     title = 'Inicial';
     answer = str2num(inputdlg(prompt,title){1});
-    
+    if(isempty(answer))
+      return;
+    endif;
     if (not(isempty(answer)))
       cotaerror = answer;
       flag = true;
